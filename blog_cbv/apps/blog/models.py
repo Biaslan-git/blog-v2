@@ -1,7 +1,44 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel, TreeForeignKey
 
+
+class Category(MPTTModel):
+    '''
+    Модель категорий с вложенностью
+    '''
+    title = models.CharField('Название категорий', max_length=255)
+    slug = models.SlugField('URL категории', max_length=255, blank=True)
+    description = models.TextField('Описание категории', max_length=300, blank=True)
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        db_index=True,
+        related_name='children',
+        verbose_name='Родительская категория'
+    )
+
+    class MPTTMeta:
+        '''
+        Сортировка по вложенности
+        '''
+        ordering_insertion_by = ('title',)
+
+    class Meta:
+        '''
+        Сортировка, название модели в админ панели, таблица с данными
+        '''
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        '''
+        Возвращение заголовка категории
+        '''
+        return self.title
 
 class Post(models.Model):
     """
@@ -17,6 +54,7 @@ class Post(models.Model):
     slug = models.SlugField(verbose_name='URL', max_length=255, blank=True, unique=True)
     description = models.TextField(verbose_name='Краткое описание', max_length=500)
     text = models.TextField(verbose_name='Полный текст записи')
+    category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='posts', verbose_name='Категория')
     thumbnail = models.ImageField(default='default.jpg',
         verbose_name='Изображение записи',
         blank=True,

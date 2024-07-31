@@ -37,6 +37,12 @@ class Category(MPTTModel):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
+    def get_absolute_url(self):
+        """
+        Получаем прямую ссылку на категорию
+        """
+        return reverse('post_by_category', kwargs={'slug': self.slug})
+
     def __str__(self):
         '''
         Возвращение заголовка категории
@@ -58,7 +64,9 @@ class Post(models.Model):
     description = models.TextField(verbose_name='Краткое описание', max_length=500)
     text = models.TextField(verbose_name='Полный текст записи')
     category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='posts', verbose_name='Категория')
-    thumbnail = models.ImageField(default='default.jpg',
+    thumbnail = models.ImageField(
+        max_length=200,
+        default='default.svg',
         verbose_name='Изображение записи',
         blank=True,
         upload_to='images/thumbnails/%Y/%m/%d/',

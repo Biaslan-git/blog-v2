@@ -12,6 +12,7 @@ pillow = "^10.4.0"
 django-mptt = "^0.16.0"
 django-mptt-admin = "^2.6.2"
 pytils = "^0.4.1"
+django-debug-toolbar = "^4.4.6"
 
 
 [build-system]

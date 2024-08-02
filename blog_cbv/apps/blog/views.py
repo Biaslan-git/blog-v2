@@ -1,15 +1,40 @@
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from .models import Post, Category
-from .forms import PostCreateForm
+from .forms import PostCreateForm, PostUpdateForm
+from apps.services.mixins import AuthorRequiredMixin
 
 
-class PostCreateView(CreateView):
+class PostUpdateView(AuthorRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    Представление: обновления материала на сайте
+    """
+    model = Post
+    template_name = 'blog/post_update.html'
+    context_object_name = 'post'
+    form_class = PostUpdateForm
+    login_url = 'home'
+    success_message = 'Запись была успешно обновлена!'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Обновление статьи: {self.object.title}'
+        return context
+
+    def form_valid(self, form):
+        # form.instance.updater = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+class PostCreateView(LoginRequiredMixin, CreateView):
     """
     Представление: создание материалов на сайте
     """
     model = Post
     template_name = 'blog/post_create.html'
     form_class = PostCreateForm
+    login_url = 'home'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -16,8 +16,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-!6(xfh!$dud6f2#vw-6x0&k*!&d15%n-7z44-%!qb1#eok8%2g'
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'django_mptt_admin',
     'debug_toolbar',
     'apps.accounts.apps.AccountsConfig',
+    'taggit',
 ]
 
 MIDDLEWARE = [

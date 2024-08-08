@@ -16,6 +16,7 @@ django-debug-toolbar = "^4.4.6"
 django-taggit = "^6.0.0"
 django-recaptcha = "^4.0.0"
 django-ckeditor = "^6.7.1"
+django-tiptap = "^0.0.18"
 
 
 [build-system]

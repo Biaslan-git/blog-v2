@@ -5,6 +5,7 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from taggit.managers import TaggableManager
 from ckeditor.fields import RichTextField
+from django_tiptap.fields import TipTapTextField
 
 from apps.services.utils import unique_slugify
 
@@ -74,11 +75,8 @@ class Post(models.Model):
 
     title = models.CharField(verbose_name='Название записи', max_length=255)
     slug = models.SlugField(verbose_name='URL', max_length=255, blank=True)
-    description = RichTextField(
-        config_name='awesome_ckeditor', 
-        verbose_name='Краткое описание',
-        max_length=500)
-    text = RichTextField(config_name='awesome_ckeditor', verbose_name='Полный текст записи')
+    description = TipTapTextField(verbose_name='Краткое описание')
+    text = TipTapTextField(verbose_name='Полный текст')
     category = TreeForeignKey('Category', on_delete=models.PROTECT, related_name='posts', verbose_name='Категория')
     thumbnail = models.ImageField(
         max_length=200,
@@ -86,7 +84,7 @@ class Post(models.Model):
         verbose_name='Изображение записи',
         blank=True,
         upload_to='images/thumbnails/%Y/%m/%d/',
-        validators=[FileExtensionValidator(allowed_extensions=('png', 'jpg', 'webp', 'jpeg', 'gif'))]
+        validators=[FileExtensionValidator(allowed_extensions=('svg', 'png', 'jpg', 'webp', 'jpeg', 'gif'))]
     )
     status = models.CharField(choices=STATUS_OPTIONS, default='published', verbose_name='Статус записи', max_length=10)
     create = models.DateTimeField(auto_now_add=True, verbose_name='Время добавления')

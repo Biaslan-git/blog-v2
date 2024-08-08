@@ -141,6 +141,24 @@ files = [
 Django = ">=4.1"
 
 [[package]]
+name = "django-tiptap"
+version = "0.0.18"
+description = "TipTap Editor in Django 🚀"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "django_tiptap-0.0.18-py3-none-any.whl", hash = "sha256:938ad991ea55ce5fe35ab4827a2c10ed5289e5857644c340cd1d252519c7abdc"},
+    {file = "django_tiptap-0.0.18.tar.gz", hash = "sha256:da8a10ad3fbc93cc053488002c587df9f1d9468038ce1728416740ef337c837f"},
+]
+
+[package.dependencies]
+Django = ">=2.2"
+
+[package.extras]
+dev = ["black", "isort", "pre-commit"]
+test = ["pytest"]
+
+[[package]]
 name = "pillow"
 version = "10.4.0"
 description = "Python Imaging Library (Fork)"
@@ -276,4 +294,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "f23e4cfab34207ac3d5c942f1e501283e3a3c6eda0fd9dcfb9cddee52e6f8cd4"
+content-hash = "ff7c3c28757c6fc8ac091b7fc60e2e6153a567490e38df18efe2f42431784169"

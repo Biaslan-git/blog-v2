@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     'apps.accounts.apps.AccountsConfig',
     'taggit',
     'django_recaptcha',
-    'ckeditor_uploader',
-    'ckeditor',
     'django_tiptap',
 ]
 
